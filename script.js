@@ -1,50 +1,46 @@
+var textoEncriptadoGlobal = ""; // Variable global para almacenar el contenido encriptado
 
-
-function encriptar () {
-    
+function encriptar() {
     var frase = document.getElementById("textoEncriptado").value.toLowerCase();
 
-    var textoEncriptado = frase.replace(/e/img, "enter");
-    var textoEncriptado = textoEncriptado.replace(/i/img, "imes");
-    var textoEncriptado = textoEncriptado.replace(/a/img, "ai");
-    var textoEncriptado = textoEncriptado.replace(/o/img, "ober");
-    var textoEncriptado = textoEncriptado.replace(/u/img, "ufat");
+    textoEncriptadoGlobal = frase.replace(/e/gim, "enter");
+    textoEncriptadoGlobal = textoEncriptadoGlobal.replace(/i/gim, "imes");
+    textoEncriptadoGlobal = textoEncriptadoGlobal.replace(/a/gim, "ai");
+    textoEncriptadoGlobal = textoEncriptadoGlobal.replace(/o/gim, "ober");
+    textoEncriptadoGlobal = textoEncriptadoGlobal.replace(/u/gim, "ufat");
 
-    document.getElementById("textoDesencriptado").innerHTML = textoEncriptado;
+    document.getElementById("textoDesencriptado").value = textoEncriptadoGlobal;
     borrarEntrada();
-
 }
 
-function desencriptar () {
-    
+function desencriptar() {
     var frase = document.getElementById("textoEncriptado").value.toLowerCase();
+    var textoDesencriptado = frase.replace(/enter/gim, "e");
+    textoDesencriptado = textoDesencriptado.replace(/imes/gim, "i");
+    textoDesencriptado = textoDesencriptado.replace(/ai/gim, "a");
+    textoDesencriptado = textoDesencriptado.replace(/ober/gim, "o");
+    textoDesencriptado = textoDesencriptado.replace(/ufat/gim, "u");
 
-    var textoDesencriptado = frase.replace(/enter/img, "e");
-    var textoDesencriptado = textoDesencriptado.replace(/imes/img, "i");
-    var textoDesencriptado = textoDesencriptado.replace(/ai/img, "a");
-    var textoDesencriptado = textoDesencriptado.replace(/ober/img, "o");
-    var textoDesencriptado = textoDesencriptado.replace(/ufat/img, "u");
-
-    document.getElementById("textoDesencriptado").innerHTML = textoDesencriptado;
+    document.getElementById("textoDesencriptado").value = textoDesencriptado;
     borrarEntrada();
-
-
 }
 
-
-
-function copiar (){
-
-    var contenido = document.querySelector("#textoDesencriptado");
-    contenido.select();
-    document.execCommand("Copy");
-    
-    
-
-
+function copiar() {
+    var contenido = document.querySelector("#textoDesencriptado").value;
+    textoEncriptadoGlobal = contenido; // Almacenar el contenido encriptado en la variable global
+    navigator.clipboard.writeText(textoEncriptadoGlobal).then(function() {
+        console.log('Texto copiado al portapapeles');
+    }).catch(function(error) {
+        console.error('Error al copiar el texto: ', error);
+    });
+    borrarEntrada()
+    borrarSalida()
 }
 
-function borrarEntrada(){
-    document.getElementById("textoEncriptado").value ="";
+function borrarEntrada() {
+    document.getElementById("textoEncriptado").value = "";
 }
 
+function borrarSalida(){
+    document.getElementById("textoDesencriptado").value = "";
+}
